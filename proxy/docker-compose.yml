@@ -1,0 +1,15 @@
+services:
+  mitmproxy:
+    image: mitmproxy/mitmproxy:11
+    command: >
+      mitmweb --listen-host 0.0.0.0 --listen-port 8081
+      --web-host 0.0.0.0 --web-port 8082
+      --set web_open_browser=false --set web_password=dev
+      -s /addon.py
+    ports:   # bound to loopback only: an open proxy on the LAN would be bad
+      - "127.0.0.1:8081:8081"   # proxy
+      - "127.0.0.1:8082:8082"   # traffic inspector UI (password: dev)
+      - "127.0.0.1:8099:8099"   # rule sync endpoint
+    volumes:
+      - ./addon.py:/addon.py:ro
+      - ./data:/home/mitmproxy/.mitmproxy   # CA + rules.json persist here

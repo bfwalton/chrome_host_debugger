@@ -22,14 +22,7 @@ function render() {
     const del = document.createElement("button");
     del.textContent = "✕";
     del.onclick = () => { state.rules.splice(i, 1); save(); render(); };
-    const hsts = document.createElement("button");
-    hsts.textContent = "HSTS";
-    hsts.title = "Copy domain and open Chrome's HSTS page (paste it into Delete domain security policies)";
-    hsts.onclick = async () => {
-      await navigator.clipboard.writeText(rule.host.replace(/^\*\./, ""));
-      chrome.tabs.create({ url: "chrome://net-internals/#hsts" });
-    };
-    row.append(on, label, hsts, del);
+    row.append(on, label, del);
     box.append(row);
   });
 }
@@ -52,3 +45,8 @@ chrome.storage.local.get(["enabled", "rules"]).then((s) => {
   state = { enabled: s.enabled ?? true, rules: s.rules ?? [] };
   render();
 });
+
+// Proxy status dot: the rule endpoint answers GET when the proxy container is up.
+fetch("http://localhost:8099/rules")
+  .then(() => { $("status").textContent = "● proxy online"; $("status").style.color = "#1a7f37"; })
+  .catch(() => { $("status").textContent = "● proxy offline (docker compose up in proxy/)"; $("status").style.color = "#c00"; });
