@@ -1,0 +1,26 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  body { font: 13px system-ui, sans-serif; width: 380px; margin: 12px; }
+  header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  h1 { font-size: 14px; margin: 0; }
+  .row { display: flex; gap: 6px; align-items: center; margin: 4px 0; }
+  input[type=text] { flex: 1; min-width: 0; padding: 4px; }
+  input.target { flex: 0 0 110px; }
+  button { cursor: pointer; }
+  #err { color: #c00; min-height: 1em; }
+  small { color: #666; }
+</style>
+<header>
+  <h1>Local Host Router</h1>
+  <label><input type="checkbox" id="enabled"> Enabled</label>
+</header>
+<div id="rules"></div>
+<div class="row">
+  <input type="text" id="host" placeholder="www.apple.com or *.suite.test">
+  <input type="text" id="target" class="target" placeholder="3000 or host:port">
+  <button id="add">Add</button>
+</div>
+<div id="err"></div>
+<small>Listed domains are forced to HTTP and routed to localhost. Other sites are untouched.</small>
+<script src="popup.js"></script>
