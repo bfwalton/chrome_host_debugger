@@ -3,6 +3,8 @@
 Chrome extension that routes chosen domains to local Docker ports, with no hosts file edit and no admin rights.
 Type `taco.com` in Chrome and it loads whatever is listening on `localhost:8080`.
 
+![Extension popup](docs/popup.png)
+
 ## How it works
 
 For each enabled rule the extension does two things:
